@@ -20,12 +20,14 @@ export default function generateAvatar(text) {
   return canvas.toDataURL('image/png');
 }
 
+
 function random_bg_color(text) {
   var x = Math.floor(((text?.toLowerCase().charCodeAt(0) - 96) / 26) * 256);
-  var y = Math.floor(
-    ((text?.toLowerCase().charCodeAt(0) - 96) / 26 + 0.33) * 256
+  var y =
+    255 - Math.floor(((text?.toLowerCase().charCodeAt(0) - 96) / 26) * 256);
+  var z = Math.floor(
+    ((text?.toLowerCase().charCodeAt(0) - 96) / 26 + 0.6) * 256
   );
-  var z = Math.floor(((text?.toLowerCase().charCodeAt(0) - 96) / 26) * 256);
   // var z = Math.floor(Math.random() * 256);
   var bgColor = 'rgb(' + x + ',' + y + ',' + z + ')';
 
