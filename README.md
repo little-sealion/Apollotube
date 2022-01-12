@@ -1,71 +1,79 @@
-# Getting Started with Create React App
+### Task
+Using ReactJS, write a simple video player where people can watch videos and leave comments.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Heads up: Data is served from a read-only data store, so no information will be persisted between requests.
 
-## Available Scripts
+To submit your work, commit and push everything to a public repo (such as GitHub) and send us the URL in an email.
 
-In the project directory, you can run:
+### URLs
+ #### Base URL for this test
+ https://my-json-server.typicode.com/fattymiller/youtube-test/
 
-### `npm start`
+ - GET /profile
+    > The profile of the currently logged in user
+ - GET /users
+    > Details on all users registered on the platform
+ - GET /users/[id]
+    > Profile information for user with [id]
+ - GET /users/[id]/videos
+    > A collection of all videos uploaded by a User
+ - GET /users/[id]/comments
+    > A collection of all comments posted by a user
+ - GET /videos
+    > A collection of all videos that have been uploaded
+ - GET /videos/[id]
+    > Details on the uploaded video including a link to a video file to play
+ - GET /videos/[id]/comments
+    > A collection of all comments uploaded to video with [id]
+ - POST /videos/[id]/comments
+    > A URL that a user can post to when leaving a comment against a video.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+    > **Note** this URL is read-only, no data will actually be persisted.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Example request code
+```
+fetch('https://my-json-server.typicode.com/fattymiller/youtube-test/users/2/videos')
+  .then(response => response.json())
+  .then(json => console.log(json))
+```
 
-### `npm test`
+> Expected response
+```
+[
+  {
+    description: "Started out trying to be the next Beatles.\nGot my Johnny Walkers out instead."
+    id: 3
+    size: 12492.8
+    title: "Johnny Walker Beatles Time"
+    uploadedAt: "2019-04-07T12:16:47+10:00"
+    url: "https://s3-ap-southeast-2.amazonaws.com/coding-test-asset/walker.mp4"
+    userId: 2
+  }
+]
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-# Apollotube
+### Data Dictionary
+#### Users
+ - id (number)
+ - name (string)
+ - type (string): Either 'guest' or 'uploader'
+#### Videos
+ - id (number)
+ - userId (number): References the uploader record
+ - title (string)
+ - description (string): In markdown format
+ - uploadedAt (datetime)
+ - url (string)
+ - size (number)
+#### Comments
+ - id (number)
+ - userId (number): References the guest who wrote the comment
+ - videoId (number): References the video the comment was made against
+ - date (datetime)
+ - body (string)
+#### Profile
+ - id (number): Your user ID
+ - name (string)
+ - memberSince (datetime)
+ - watched (array): Which videos you have watched, and how far through you made it
+ - subscriptions (array): Which uploaders you have subscribed to
